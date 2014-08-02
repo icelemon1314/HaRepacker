@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.3077</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1A132100-B6EE-4F80-98C4-149EE1FCEA31}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>WzLib</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ManagedZLib, Version=1.1.1.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\ManagedZLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\IWzFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\IWzImageProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\IWzObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzAes.cs" />
+    <Compile Include="WzLib\WzByteFloatProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzCanvasProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzCompressedIntProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzConvexProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzDirectory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzDoubleProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzExtendedProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzListFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzMapleVersion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzNullProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzObjectType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzPngProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzPropertyType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzSoundProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzStringProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzSubProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzTools.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzUnsignedShortProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzUOLProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WzLib\WzVectorProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
