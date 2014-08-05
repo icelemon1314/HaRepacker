@@ -175,7 +175,7 @@
 
         internal void ParseDirectory()
         {
-            int num = WzTools.ReadCompressedInt(this.wzReader);
+            int num = WzTools.ReadCompressedInt(this.wzReader); // 文件个数
             for (int i = 0; i < num; i++)
             {
                 byte num3 = this.wzReader.ReadByte();

@@ -95,7 +95,6 @@
                 iname = WzTools.ReadDecodedString(this.wzReader);
             }
             string str3 = iname;
-            this.WriteFile("ExtractMore:" + str3);
             if (str3 != null)
             {
                 if (str3 != "Property")
@@ -199,11 +198,13 @@
                                 continue;
                             }
                             case 3:
+                            case 19: // Map.wz add
+                            case 20: // Character.wz 992001100 add
                             {
                                 property.AddProperty(new WzCompressedIntProperty(propName, WzTools.ReadCompressedInt(this.wzReader)) { Parent = property, ParentImage = this.imgParent });
                                 continue;
                             }
-                            case 4:
+                            case 4: // 4字节浮点数
                             {
                                 num3 = this.wzReader.ReadByte();
                                 if (num3 != 0x80)
@@ -218,7 +219,7 @@
                                 property.AddProperty(new WzDoubleProperty(propName, this.wzReader.ReadDouble()) { Parent = property, ParentImage = this.imgParent });
                                 continue;
                             }
-                            case 8:
+                            case 8: // string
                             {
                                 property.AddProperty(new WzStringProperty(propName, this.DumpBlock()) { Parent = property, ParentImage = this.imgParent });
                                 continue;
