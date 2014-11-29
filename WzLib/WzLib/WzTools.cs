@@ -68,12 +68,20 @@
 
         public static string DecryptNonUnicodeString(char[] stringToDecrypt)
         {
-            string str = "";
+            /*string str = "";
             for (int i = 0; i < stringToDecrypt.Length; i++)
             {
                 str = str + ((char)(stringToDecrypt[i] ^ wzKey[i]));
             }
-            return str;
+            return str;*/
+            StringBuilder str = new StringBuilder();
+            int length=stringToDecrypt.Length;
+            for (int i=0; i < length; i++) {
+                str.Append(((char)(stringToDecrypt[i] ^ wzKey[i])));
+            }
+
+            return str.ToString();
+
         }
         // 解密字符串
         public static string DecryptString(char[] stringToDecrypt)

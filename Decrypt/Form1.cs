@@ -565,7 +565,7 @@ namespace Decrypt
          * 导出xml格式文件
          * 
          */
-        public void DumpXML(TextWriter tw, string depth, IWzImageProperty[] props)
+        public void DumpXML(ref TextWriter tw, string depth, IWzImageProperty[] props)
         {
             foreach (IWzImageProperty property in props)
             {
@@ -591,8 +591,9 @@ namespace Decrypt
                         {
                             tw.WriteLine(string.Concat(new object[] { depth, "<canvas name=\"", property3.Name, "\" width=\"", property3.PngProperty.Width, "\" height=\"", property3.PngProperty.Height, "\">" }));
                         }
-                        this.DumpXML(tw, depth + "    ", property3.WzProperties);
+                        this.DumpXML(ref tw, depth + "    ", property3.WzProperties);
                         tw.WriteLine(depth + "</canvas>");
+                        
                     }
                     else if (extendedProperty is WzCompressedIntProperty)
                     {
@@ -624,7 +625,7 @@ namespace Decrypt
                     {
                         WzSubProperty property9 = (WzSubProperty)extendedProperty;
                         tw.WriteLine(depth + "<imgdir name=\"" + property9.Name + "\">");
-                        this.DumpXML(tw, depth + "    ", property9.WzProperties);
+                        this.DumpXML(ref tw, depth + "    ", property9.WzProperties);
                         tw.WriteLine(depth + "</imgdir>");
                     }
                     else if (extendedProperty is WzUnsignedShortProperty)
@@ -655,7 +656,7 @@ namespace Decrypt
                     else if (extendedProperty is WzConvexProperty)
                     {
                         tw.WriteLine(depth + "<extended name=\"" + extendedProperty.Name + "\">");
-                        DumpXML(tw, depth + "    ", ((WzConvexProperty)extendedProperty).WzProperties);
+                        DumpXML(ref tw, depth + "    ", ((WzConvexProperty)extendedProperty).WzProperties);
                         tw.WriteLine(depth + "</extended>");
                     }
                 }
@@ -668,19 +669,19 @@ namespace Decrypt
             {
                 if (!combineimgs)
                 {
-                    foreach (WzDirectory directory2 in dir.WzDirectories)
-                    {
+                    foreach (WzDirectory directory2 in dir.WzDirectories) {
                         Directory.CreateDirectory(directory + "/" + directory2.Name);
                         this.DumpDir(directory2, directory + "/" + directory2.Name);
                     }
-                    foreach (WzImage image in dir.WzImages)
-                    {
+                    foreach (WzImage image in dir.WzImages) {
                         TextWriter tw = new StreamWriter(directory + "/" + image.Name + ".xml");
                         tw.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
                         tw.WriteLine("<imgdir name=\"" + image.Name + "\">");
-                        this.DumpXML(tw, "    ", image.WzProperties);
+                        this.DumpXML(ref tw, "    ", image.WzProperties);
                         tw.WriteLine("</imgdir>");
                         tw.Close();
+                        image.Dispose();
+                        GC.Collect();
                     }
                 }
                 else
@@ -695,7 +696,7 @@ namespace Decrypt
                     foreach (WzImage image in dir.WzImages)
                     {
                         tw.WriteLine("    " + "<wzimg name=\"" + image.Name + "\">");
-                        this.DumpXML(tw, "    " + "    ", image.WzProperties);
+                        this.DumpXML(ref tw, "    " + "    ", image.WzProperties);
                         tw.WriteLine("    " + "</wzimg>");
                     }
                     tw.WriteLine("</xmldump>");
@@ -714,14 +715,14 @@ namespace Decrypt
             foreach (WzImage image in dir.WzImages)
             {
                 tw.WriteLine(depth + "    " + "<wzimg name=\"" + image.Name + "\">");
-                this.DumpXML(tw, depth + "    " + "    ", image.WzProperties);
+                this.DumpXML(ref tw, depth + "    " + "    ", image.WzProperties);
                 tw.WriteLine(depth + "    " + "</wzimg>");
             }
             tw.WriteLine(depth + "</wzdir>");
         }
 
         /**
-         * dump文件
+         * dump xml 文件
          */
         private void dumpToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -740,19 +741,15 @@ namespace Decrypt
                 MessageBox.Show("no img selected");
                 return;
             }
-            if (treeView1.SelectedNode.Tag is WzImage)
-            {
+            if (treeView1.SelectedNode.Tag is WzImage) {
                 WzImage current = (WzImage)treeView1.SelectedNode.Tag;
                 TextWriter tw = new StreamWriter(current.Name + ".xml");
                 tw.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
                 tw.WriteLine("<imgdir name=\"" + current.Name + "\">");
-                DumpXML(tw, "    ", current.WzProperties);
+                DumpXML(ref tw, "    ", current.WzProperties);
                 tw.WriteLine("</imgdir>");
                 tw.Close();
-            }
-            else if (treeView1.SelectedNode.Tag is WzDirectory || treeView1.SelectedNode.Tag is WzFile)
-            {
-
+            } else if (treeView1.SelectedNode.Tag is WzDirectory || treeView1.SelectedNode.Tag is WzFile) {
                 WzDirectory dir;
                 if (treeView1.SelectedNode.Tag is WzFile){
                     dir = ((WzFile)treeView1.SelectedNode.Tag).WzDirectory;
@@ -769,9 +766,7 @@ namespace Decrypt
                     }
                 }
                 DumpDir(dir, name);
-            }
-            else
-            {
+            } else {
                 MessageBox.Show("Please choose a .img or directory");
             }
         }

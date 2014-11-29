@@ -198,8 +198,8 @@
                                 continue;
                             }
                             case 3:
-                            case 19: // Map.wz add
-                            case 20: // Character.wz 992001100 add
+                            case 19: // Map.wz 992001100 add
+                            case 20: // Character.wz  add
                             {
                                 property.AddProperty(new WzCompressedIntProperty(propName, WzTools.ReadCompressedInt(this.wzReader)) { Parent = property, ParentImage = this.imgParent });
                                 continue;
