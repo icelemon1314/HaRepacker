@@ -55,7 +55,7 @@
                     decodeStr = WzTools.ReadDecodedStringAtOffsetAndReset(this.wzReader, (long)(this.offset + this.wzReader.ReadInt32()));
                     break;
                 default:
-                    this.WriteFile("DumpBlock"+blockType);
+                    this.WriteFile(this.Name+" DumpBlock:"+blockType);
                     break;
             }
             return decodeStr;
@@ -199,9 +199,13 @@
                             }
                             case 3:
                             case 19: // Map.wz 992001100 add
-                            case 20: // Character.wz  add
                             {
                                 property.AddProperty(new WzCompressedIntProperty(propName, WzTools.ReadCompressedInt(this.wzReader)) { Parent = property, ParentImage = this.imgParent });
+                                continue;
+                            }
+                            case 20: // Character.wz  add
+                            {
+                                property.AddProperty(new WzCompressedIntProperty(propName, WzTools.ReadCompressedInt64(this.wzReader)) { Parent = property, ParentImage = this.imgParent });
                                 continue;
                             }
                             case 4: // 4字节浮点数
@@ -241,7 +245,7 @@
                             }
                             default:
                             {
-                                this.WriteFile("未知的PropertyValue：" + propValue);
+                                this.WriteFile(this.name+" 未知的PropertyValue：" + propValue);
                                 continue;
                             }
                         }

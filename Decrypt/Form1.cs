@@ -1403,5 +1403,70 @@ namespace Decrypt
             WzFiles = new List<WzFile>();
             treeView1.Nodes.Clear();
         }
+
+        // 导出所有wz为xml
+        private void dumpAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "请选择文件路径";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string foldPath = dialog.SelectedPath;
+
+                DirectoryInfo directory = new DirectoryInfo(foldPath);
+                FileInfo[] wzFileList = directory.GetFiles("*.wz");
+
+                WzMapleVersion ver;
+                WzDirectory dir;
+                ver = (WzMapleVersion)comboBox1.SelectedIndex;
+
+                foreach (FileInfo fileName in wzFileList)
+                {
+                    if (Path.GetFileName(fileName.Name) == "List.wz")
+                    {
+                        if (!combineimgs)
+                        {
+                            //try {
+                                Directory.CreateDirectory(fileName.Name);
+                            //} catch {
+                            //    fileName.Name = fileName.Name + "_";
+                            //    Directory.CreateDirectory(fileName.Name);
+                            //}
+                        }
+                    }
+                    else
+                    {
+                        String dumpName = foldPath +"/"+ fileName.Name;
+                        WzFile wzf = new WzFile(dumpName, ver);
+                        wzf.ParseWzFile();
+                        WzFiles.Add(wzf);
+
+                        dir = wzf.WzDirectory;
+                        string name = dir.Name;
+                        if (!combineimgs)
+                        {
+                            try
+                            {
+                                Directory.CreateDirectory(name);
+                            }
+                            catch
+                            {
+                                name = name + "_";
+                                Directory.CreateDirectory(name);
+                            }
+                        }
+                        DumpDir(dir, name);
+
+                        foreach (WzFile f in WzFiles) {
+                            f.Dispose();
+                        }
+                        wzf.Dispose();
+                        //WzFiles = new List<WzFile>();
+                        //wzf = new List<WzFile>();
+                        
+                    }
+                }
+            }
+        }
     }
 }

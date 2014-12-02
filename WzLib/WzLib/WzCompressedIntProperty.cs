@@ -7,7 +7,7 @@
         internal WzImage imgParent;
         internal string name;
         internal IWzObject parent;
-        internal int val;
+        internal Int64 val;
 
         public WzCompressedIntProperty()
         {
@@ -19,6 +19,12 @@
         }
 
         public WzCompressedIntProperty(string name, int value)
+        {
+            this.name = name;
+            this.val = value;
+        }
+
+        public WzCompressedIntProperty(string name, Int64 value)
         {
             this.name = name;
             this.val = value;
@@ -81,7 +87,7 @@
             }
         }
 
-        public int Value
+        public Int64 Value
         {
             get
             {

@@ -67,6 +67,7 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.dumpAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -348,7 +349,8 @@
             // 
             this.xMLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dumpToolStripMenuItem,
-            this.importToolStripMenuItem});
+            this.importToolStripMenuItem,
+            this.dumpAllToolStripMenuItem});
             this.xMLToolStripMenuItem.Name = "xMLToolStripMenuItem";
             this.xMLToolStripMenuItem.Size = new System.Drawing.Size(46, 21);
             this.xMLToolStripMenuItem.Text = "XML";
@@ -356,14 +358,14 @@
             // dumpToolStripMenuItem
             // 
             this.dumpToolStripMenuItem.Name = "dumpToolStripMenuItem";
-            this.dumpToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.dumpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dumpToolStripMenuItem.Text = "Dump";
             this.dumpToolStripMenuItem.Click += new System.EventHandler(this.dumpToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.importToolStripMenuItem.Text = "Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -441,6 +443,13 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(131, 17);
             this.toolStripStatusLabel1.Text = "Selection Type: None";
             // 
+            // dumpAllToolStripMenuItem
+            // 
+            this.dumpAllToolStripMenuItem.Name = "dumpAllToolStripMenuItem";
+            this.dumpAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dumpAllToolStripMenuItem.Text = "DumpAll";
+            this.dumpAllToolStripMenuItem.Click += new System.EventHandler(this.dumpAllToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -512,6 +521,7 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem dumpAllToolStripMenuItem;
     }
 }
 

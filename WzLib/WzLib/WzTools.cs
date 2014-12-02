@@ -130,6 +130,15 @@
             return 5;
         }
 
+        public static int GetCompressedIntLength(Int64 i)
+        {
+            if ((i <= 0x7f) && (i >= -127))
+            {
+                return 1;
+            }
+            return 5;
+        }
+
         public static int GetEncodedStringLength(string s)
         {
             int num = 0;
@@ -174,6 +183,16 @@
             if (num == -128)
             {
                 return reader.ReadInt32();
+            }
+            return num;
+        }
+
+        public static Int64 ReadCompressedInt64(BinaryReader reader)
+        {
+            sbyte num = reader.ReadSByte();
+            if (num == -128)
+            {
+                return reader.ReadInt64();
             }
             return num;
         }
@@ -288,6 +307,21 @@
             else
             {
                 num = (sbyte) i;
+                wzWriter.Write(num);
+            }
+        }
+
+        public static void WriteCompressedInt(BinaryWriter wzWriter, Int64 i)
+        {
+            sbyte num = -128;
+            if ((i > 0x7f) || (i < -127))
+            {
+                wzWriter.Write(num);
+                wzWriter.Write(i);
+            }
+            else
+            {
+                num = (sbyte)i;
                 wzWriter.Write(num);
             }
         }
