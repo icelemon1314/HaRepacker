@@ -34,6 +34,10 @@ namespace Decrypt
         public bool usebasepng = false;
         public bool combineimgs = false;
 
+        int _ThreadCount = 0;
+        int finishcount = 0;
+        object locker = new object();
+
         public Form1()
         {
             InitializeComponent();
@@ -1417,8 +1421,10 @@ namespace Decrypt
                 FileInfo[] wzFileList = directory.GetFiles("*.wz");
 
                 WzMapleVersion ver;
-                WzDirectory dir;
                 ver = (WzMapleVersion)comboBox1.SelectedIndex;
+
+                List<ManualResetEvent> manualEvents = new List<ManualResetEvent>();
+                _ThreadCount = wzFileList.Length;
 
                 foreach (FileInfo fileName in wzFileList)
                 {
@@ -1426,47 +1432,74 @@ namespace Decrypt
                     {
                         if (!combineimgs)
                         {
-                            //try {
                                 Directory.CreateDirectory(fileName.Name);
-                            //} catch {
-                            //    fileName.Name = fileName.Name + "_";
-                            //    Directory.CreateDirectory(fileName.Name);
-                            //}
+                                lock (locker) {
+                                    finishcount++;
+                                    Monitor.Pulse(locker); //完成，通知等待队列,告知已完，执行下一个。
+                                }
+                          
                         }
                     }
                     else
                     {
                         String dumpName = foldPath +"/"+ fileName.Name;
-                        WzFile wzf = new WzFile(dumpName, ver);
-                        wzf.ParseWzFile();
-                        WzFiles.Add(wzf);
+                        Thread newThread = new Thread(threadDump);
+                        newThread.Start(dumpName);
 
-                        dir = wzf.WzDirectory;
-                        string name = dir.Name;
-                        if (!combineimgs)
-                        {
-                            try
-                            {
-                                Directory.CreateDirectory(name);
-                            }
-                            catch
-                            {
-                                name = name + "_";
-                                Directory.CreateDirectory(name);
-                            }
-                        }
-                        DumpDir(dir, name);
-
-                        foreach (WzFile f in WzFiles) {
-                            f.Dispose();
-                        }
-                        wzf.Dispose();
-                        //WzFiles = new List<WzFile>();
-                        //wzf = new List<WzFile>();
                         
                     }
                 }
+
+                lock (locker)
+                {
+                    while (finishcount != _ThreadCount)
+                    {
+                        Monitor.Wait(locker);//等待
+                    }
+                }
+                MessageBox.Show("导出完毕！");
+
             }
         }
+
+
+
+        private void threadDump(object dumpName)
+        {
+            string fileName = (string)dumpName.ToString();
+            WzMapleVersion ver = (WzMapleVersion)1;
+            WzDirectory dir;
+            WzFile wzf = new WzFile(fileName, ver);
+            wzf.ParseWzFile();
+            WzFiles.Add(wzf);
+
+            dir = wzf.WzDirectory;
+            string name = dir.Name;
+            if (!combineimgs)
+            {
+                try {
+                    Directory.CreateDirectory(name);
+                } catch {
+                    name = name + "_";
+                    Directory.CreateDirectory(name);
+                }
+            }
+            DumpDir(dir, name);
+
+            WzFiles.Remove(wzf);
+            wzf.Dispose();
+
+            lock (locker) {
+                finishcount++;
+                Monitor.Pulse(locker); //完成，通知等待队列,告知已完，执行下一个。
+            }
+
+        }
+
+
+
     }
+
+
+
 }
